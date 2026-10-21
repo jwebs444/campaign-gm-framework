@@ -64,9 +64,12 @@ These examples use different characters, genres, and nominal rules systems. They
 | [Roll20 bridge](roll20/README.md) | Install, inspect, capture sources, limits and permissions |
 | [Evaluation guide](docs/EVALUATION.md) | Test real outcomes and unfamiliar questions |
 | [Export coverage](docs/EXPORT_COVERAGE.md) | What was generalized, retained, replaced or intentionally excluded |
+| [Parity audit](docs/PARITY_AUDIT.md) | Losses found in the initial export, restored capabilities and remaining limits |
 | [Contributing](CONTRIBUTING.md) | Changes, tests, privacy and issue reports |
 
 The campaign procedures cover [portrayal](gm_framework/templates/procedures/PLAY.md), [living world](gm_framework/templates/procedures/WORLD.md), [records](gm_framework/templates/procedures/RECORDS.md), [space and encounters](gm_framework/templates/procedures/SPATIAL.md), [tools](gm_framework/templates/procedures/TOOLS.md), and [handoffs](gm_framework/templates/procedures/HANDOFF.md). They are triggered detail, not six extra checklists for every turn.
+
+Existing v0.1 campaigns: install the new version, preview `campaign-gm --root PATH upgrade`, then use `upgrade --apply` if no customized-template conflict is reported. See the [upgrade procedure](docs/CONFIGURATION.md#upgrade-an-existing-v01-campaign). v0.2 restores activity triggers, separately selectable review phases, causal-history joins and stronger retrieval safeguards that the initial export lacked.
 
 ## Roll20 and model limitations
 

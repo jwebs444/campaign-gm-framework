@@ -11,7 +11,7 @@ Apply authority within the player's actual control: explicit player decisions an
 | Owner | What it owns |
 |---|---|
 | `records/state.json` | Current time, exact scene boundary, HOLD, resources, effects, party, pending player input, review coverage |
-| `records/CHARACTERS.md` | Full character profiles, relationships, earned knowledge, experience and inner development |
+| `records/CHARACTERS.md` or registered per-character owners | Full character profiles, relationships, earned knowledge, experience and inner development |
 | `records/SCENE.md` | Current working preparation: individual and group stakes, access, opportunities, next plausible scenes |
 | `records/operations.json` | Commitments, projects, reports, actor plans, last resolved step, next trigger, blockers and delivery |
 | `records/development.json` | Personalized opportunities, practice, credited achievements, rewards, unresolved build choices |
@@ -24,11 +24,17 @@ Split large owners into coherent sections or files when useful. Update their ref
 
 ## Recovery and focused retrieval
 
-Use `recover --mode context` after context loss, `fresh` for a new GM, and `review` at a broad review. Read the operating core once. Restore all current protagonists and actual scene participants through full profile routes. Add missing sources and outside dependencies before reliance. A frozen transfer document cannot overrule live owners.
+Use `recover --mode context` after context loss, `fresh` for a new GM, and `scene` after an interruption when operating context remains retained. Use the five `review --phase` selections below at broad reviews. Read the operating core once. Restore all current protagonists and actual scene participants through full profile and causal-history routes. Add missing sources and outside dependencies before reliance. A frozen transfer document cannot overrule live owners.
 
 Use `prepare ENTITY --topic TOPIC --actor PARTICIPANT` at material scene/topic changes. Add `--destination ID` and `--until TICK` before a transition. Required dependencies remain selected; topical dependencies are selected for that topic. Related entities are suggestions, not aliases or shared knowledge. Read relevant ones explicitly. Inspect `unselected_refs` and `discover` when evidence may be missing or contrary. No search result is not proof of absence.
 
+Add the applicable `--activity arrival|transition|rest|downtime|resolution|scene-close|strategy|combat` to the same preparation call. This selects the existing duty owners and procedure sections when needed; it creates no second queue. In particular, rest selects companion preparation and development, and resolutions select development, rewards and event aftermath. Reuse these duties while current rather than running every activity each response. Commitments still in the scene owner remain visible before being promoted to operations.
+
+Use `topics ENTITY`, `sources ENTITY` and `catalog` to inspect available routes. A source menu is not a completed source read. Full profiles may span `profile_refs`; `history` links join accepted causal evidence to normal preparation. Keep source-active independent strategists in `review_actors`, even when they have not entered the party's scene. Minor departed characters can retain precise accepted-history routes without an invented biography.
+
 The output is private GM material. Reference hashes establish bytes, not truth, comprehension, or character awareness. `--list-parts` is a menu, not a completed read. Read each required full `--part`. Scoped reuse is permitted only while previous complete bodies remain available and their interpretation remains current. Do not reuse a manifest across context loss merely because the hash matches.
+
+An explicitly configured `--refresh NAME --assert-retained-context SCOPE` can select a small change while the full context is retained. It must preserve invariant qualifiers and cannot replace recovery or actual-participant profiles. Manifest reuse also requires `--assert-invalidation REASON`: state why changed premises, new evidence, knowledge, source adoption and correction consequences were checked. The engine checks request, configuration, selection, checkpoint and accepted-file metadata; your assertion covers semantic changes it cannot infer. `--reuse-procedures` is limited to scene/review recovery with retained instructions, never fresh/context recovery.
 
 ## Workflow A: each narrative response
 
@@ -59,6 +65,8 @@ Default review offsets correspond to morning and evening; configure them for the
 3. World: resolve due work through earned information, real channels, means, motives, elapsed time and uncertain dice. Stop for meaningful player decisions or perceptible events.
 4. Cleanup: close completed steps, repair stale claims, preserve unique history, remove rejected branches, and verify affected retrieval output.
 5. Scene: restore the exact checkpoint, HOLD, pending exchange, cast, resources and next boundary.
+
+Select each phase with `recover --mode review --phase orientation|preparation|world|cleanup|scene`. Finish its work before selecting the next phase so it reads updated owners. The default review phase is orientation, not all five phases. Complete bounded parts within each phase. `review_actors`, operation actors and operation `refs` supply independent actors and event dependencies; keep those routes current as the world expands.
 
 Record completed and partial coverage in the state owner. Do not replay completed outcomes, skip unfinished phases, or confuse OOC maintenance with fictional time. A late correction can require targeted re-evaluation without simulating missed harms retroactively.
 

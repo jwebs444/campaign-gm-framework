@@ -14,35 +14,39 @@ For example, two characters can link to one accepted conversation while retainin
 
 `prepare` resolves an exact ID, name, or true alias. Unknown or ambiguous identities fail instead of guessing. It then selects:
 
-1. The current checkpoint.
+1. The current checkpoint and scene owner, including unpromoted commitments.
 2. The entity's required evidence and requested topic references.
-3. Full profile references for explicitly named actual participants.
+3. Full profile and accepted causal-history references for a focal character and explicitly named actual participants.
 4. The transitive closure of required or topic-matching reference dependencies.
-5. The complete unfinished operations queue, with clock/destination attention reasons.
+5. Activity-specific duties and governing references for relevant/due operations. Transitions, arrivals, explicit time horizons and scene close expose the whole unfinished queue; ordinary focused preparation selects related and due work.
 
 Dependency traversal visits each reference once and terminates cycles. Every edge carries a reason. Original source keys, parent areas, governing rules, contrary constraints and corrections can therefore stay attached to the evidence that depends on them. Dependencies are curated; the program does not infer all semantic relationships.
 
-The output includes owner, selector, status, authority, hash and selection reason. Exact duplicate bodies from the same owner with the same status/authority merge. There is no cross-file semantic deduplication, invisible token cutoff, or claim that short output is necessarily better. Missing required text raises an error. Visual references produce explicit inspection gaps. Unselected topics and related entities remain visible.
+The output includes owner, selector, status, authority, hash and selection reason. Exact or provably contained selections from the same owner with the same status/authority/view merge, retaining their reasons. There is no cross-file semantic deduplication, invisible token cutoff, or claim that short output is necessarily better. Missing required text raises an error. Visual references produce explicit inspection gaps. Unselected topics, related entities and available focused refreshes remain visible.
 
 Unlike the private predecessor's topic-keyword preview layer, this release emits complete selected units. This reduces ambiguous omission behavior at the cost of more text when owners are too large. Improve coherent section selectors before replacing profiles with fragments.
 
 ## Selectors and discovery
 
-References support exact Markdown headings, JSON pointers, unique paragraph prefixes, and unique row prefixes. Ambiguous or missing selectors fail. Paths must stay inside the campaign and outside rejected/evaluation/receipt/handoff stores, including through symbolic links.
+References support exact Markdown headings (optionally excluding child headings), JSON pointers, unique paragraph/row prefixes, and unique literal start/end boundaries. Ambiguous or missing selectors fail. A derived readable HTML view preserves heading structure and link targets while the complete raw original remains hashed. Paths must stay inside the campaign and outside rejected/evaluation/receipt/handoff stores, including through symbolic links.
 
 `discover` searches registered accepted/source references and configured accepted-file discovery paths. It ranks lexical matches without a top-N cutoff. It also exposes newly added accepted documents that have no route yet. Matches are candidates: inspect authority, corrections, chronology and semantic relevance before use. Register relevant new selectors after discovery.
 
+A file with registered proposed/inactive material is withheld from the broad fallback scan. Unrelated accepted registered sections remain searchable. A parent read that includes a blocked child fails instead of bypassing its status. This is a backstop, not a substitute for purging rejected material from live owners; unmarked prose cannot be classified automatically.
+
 This addresses the indexing/search dependency in practical terms: curate reliable routes for known recurring work, but keep broader accepted-file discovery for information that has not yet been routed. Inventory missing source material separately. A zero-result search cannot establish that the underlying adventure lacks a fact.
 
-`impact` traverses reverse declared dependencies and reports affected entities. It does not discover every narrative consequence. A correction still needs GM examination of resources, knowledge, reports, relationships and later events.
+`impact` traverses reverse declared dependencies and reports affected entities (including profile/history links), operation evidence, recovery/activity/review entry points and focused refreshes. It does not discover every narrative consequence. A correction still needs GM examination of resources, knowledge, reports, relationships and later events.
 
 ## Recovery, context size and reuse
 
-Recovery modes select configured refs plus full profiles for the party and current participants. Context recovery uses live owners. Fresh recovery also includes accepted history by default; split large histories into appropriate routes rather than requesting an unbounded transcript. Review recovery supplies the operating context for the ordered review, not a completed review certificate.
+Recovery modes select configured refs plus full profiles and history anchors for the party and current participants. Context recovery uses live owners; scene recovery restores the actual scene after interruptions. Fresh recovery also includes accepted history by default; split large histories into appropriate routes rather than requesting an unbounded transcript. Five separately selectable review phases read updated owners in sequence. Independent `review_actors` enter orientation/preparation/world, and unfinished operation actors and evidence enter world resolution. None of these reads certifies completion.
 
-`--list-parts` shows a bounded reading menu; `--part N` returns a complete selected unit. A list or truncated tool response is not a completed read. Keep owner units small enough for the host's output limits.
+`--list-parts` shows a bounded reading menu; repeatable `--part N` returns complete selected units. Operation bodies are not repeated with each navigation part; use `attention` before a dependent transition. Full output also avoids duplicating the operations owner in attention. A list or truncated tool response is not a completed read. Keep owner units small enough for the host's output limits.
 
-Optional manifests record request, policy, selected IDs and SHA-256 hashes. Reuse requires an explicit matching retained-context scope. Policy/request/selection changes invalidate omission; changed bodies are printed. Unchanged bodies may be suppressed only when the caller still retains and has assessed them. A hash cannot prove reading, comprehension, fictional truth or source freshness. Context loss requires recovery even if bytes match.
+Optional manifests record request, policy, selected IDs, body hashes, checkpoint digest and accepted-discovery file metadata. Reuse requires matching retained-context and semantic-invalidation assertions. Changes to these inputs invalidate omission; selected bodies are always read and checked before omission. New unrouted evidence or a changed checkpoint therefore causes a conservative reread. File size/mtime metadata is cheap invalidation, not tamper-proof content verification or fictional age. A hash cannot prove reading, comprehension, fictional truth or source freshness. Context loss requires recovery even if bytes match.
+
+Configured focused refreshes narrow a repeated topic only under asserted retained full context. They include invariant qualifiers; naming an actual actor still adds their full profile/history. This differs from manifest reuse: a refresh deliberately changes selection, whereas a manifest can suppress unchanged bytes in the same selection. Both need GM judgment about new premises.
 
 ## Time and living world
 
@@ -54,7 +58,7 @@ The GM resolves immediate actions, active work at its next meaningful opportunit
 
 ## Mutations and trust
 
-Retrieval is read-only. Initialization creates a new private directory. Source import writes captured source and provenance without adopting it as history. `update` performs an expected-hash guarded replacement of one configured JSON owner. All other authoring uses ordinary file tools with affected-selector readback.
+Retrieval is read-only. Initialization creates a new private directory. Source import writes captured source and provenance without adopting it as history. `add-character` creates an explicitly unfilled scaffold and routes; `source-link` connects existing source sections without adopting them. `upgrade` previews procedure/configuration changes and preserves customized templates by stopping for a manual merge. `update` performs an expected-hash guarded replacement of one configured JSON owner. Other authoring uses ordinary file tools with affected-selector readback.
 
 Use a single writer. Cross-file changes are not transactional; keep play on HOLD through reconciliation, especially after an interrupted import or correction. Do not present this as a concurrent campaign database. Git can back up a private campaign if its users deliberately configure it; never publish that data by default.
 

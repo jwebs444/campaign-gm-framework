@@ -12,6 +12,8 @@ Use original campaign sources stored in the configured Roll20 game. Reuse comple
 
 Before time advances or a dependent arrival, report, or decision, run `attention` and resolve applicable work. Use immediate, active, and background cadences in the workflow. Morning/evening are default configurable review boundaries, not independent scheduled jobs. No fictional process runs between responses or during OOC maintenance.
 
+Connect preparation to actual activity with `prepare --activity` and broad reviews to the five ordered `recover --mode review --phase` selections. Restore scene context after interruptions. Maintain full profile/history routes and independent `review_actors`; source-active people do not cease to matter when absent. These are entry points to the existing duties, not additional checklists.
+
 Keep player-facing narration free of GM secrets, source receipts, evaluation material, and contingency analysis. Explain presentation limits OOC when relevant; do not convert them into invented character preferences. Preserve ordinary humor, affection, comfort, beauty, and quiet as well as the chosen genre's dangers.
 
 Update authoritative owners in place after delivered consequential changes. Preserve accepted history once, including meaningful small moments. Remove rejected branches from ordinary retrieval immediately; scheduled cleanup also removes stale current claims. Plans do not become facts, resources, agreements, or constraints without actual adoption and delivery.

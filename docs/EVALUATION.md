@@ -6,6 +6,8 @@ Evaluate whether play improves, not whether the system has many rules or passing
 
 The focused Python suite exercises two independently initialized settings; full profiles; required parent/original/topical-supplement dependencies; early dependent returns; overdue/partial broad reviews; no implicit time advancement; changed-byte reuse; missing and visual dependencies; alias collisions; departed character retrieval; accepted/rejected boundaries; unrouted history discovery; source Unicode/completeness; and guarded authoritative updates.
 
+The parity suite adds distinct scenarios for a rest, an unpromoted promise before an early return, an absent strategist with an original-source/supplement event, a minor departed witness, an inactive child hidden in a parent owner, newly added evidence invalidating reuse, literal source keys and readable HTML sections, and a customized campaign upgrade. It checks which facts and duties reach the reader and that no fictional state changes. It does not ask the generator to imitate a supplied scene answer.
+
 The JavaScript harness exercises GM-only reads, private escaped receipts, pagination, exact attributes, read-only batches, isolated clone writes, stale expected values, forbidden live edits, conflict-aware undo, player-page isolation and manual music state guards. It uses local synthetic sandbox objects.
 
 These tests do not prove live integration with every Roll20 sheet/sandbox, all source completeness, correct natural-language condition evaluation, or model adherence. Publication does not include a fresh live-game deployment or a longitudinal playtest of this generalized release.

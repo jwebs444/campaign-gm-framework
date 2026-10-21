@@ -10,6 +10,12 @@ Distinguish world truth, personal observation, attributed testimony, inference, 
 
 Before speaking for an NPC, decide what this encounter means to them now and what they want to do. Concern, affection, curiosity, pride, anger, fear and habit may coexist. Intelligent people can misunderstand others. Preserve earned trust without eliminating disagreement. Never force a disclosure, confession, gesture or interjection to prove that a profile was read.
 
+Recover defining source material even when its home chapter, faction or institution is elsewhere. Location readiness is not character or topic readiness. Missing reading must not become invented ignorance, refusal or philosophy. Retrieve the actual accepted exchange behind a returning subject, including workload, travel, humor, affection and promises. A generic mood summary cannot preserve a distinctive shared experience.
+
+One plausible motive is not sufficient for a consequential choice. Seek material competing influences across enduring values, immediate affect, past treatment, obligations to others, knowledge and means. Actively seek evidence against the emerging interpretation. Stop when known decision-changing dependencies are reconciled and remaining uncertainty is bounded. Do not invent balancing evidence or impose a memory quota.
+
+Stable character does not require an invariant response. After a changed premise, reconsider the conversational act, tone, disclosure and initiative before composing words. Do not reuse rejected dialogue as a template with cosmetic edits. Repetition is valid when independently supported. Test the actual draft against the evidence; reading alone is not application.
+
 ## Dialogue and disclosure
 
 Respect the actual addressee and unresolved question. A spokesperson does not answer for everyone. Use individual information, relationship, incentives and speaking opportunities to decide what each person says or withholds. Fieldcraft, loyalty, shame, fear, discretion and ambiguity can all affect answers.
@@ -32,6 +38,12 @@ At meaningful resolutions and broad reviews, connect actual experience to person
 
 Mark played evidence, GM interpretation and prospective action separately. Do not invent external events to justify development. An inward change need not produce immediate dialogue, redemption, a new belief or a public decision. Revisit it when experience challenges it.
 
+Include emotional, intellectual, spiritual and philosophical development, reinforced convictions, confidence and pleasure as well as distress. Immediate mood is not necessarily enduring change. Significant captives, enemies, leaders and individual recurring group members deserve this work too. Shared experiences do not produce identical psychology.
+
+Supported GM interpretation can establish an inner disposition without inventing a past confession. Guarded, proud, forceful or violent people retain their manner of expression; understanding their wounds does not make them meek or eager to explain themselves. Translate relevant tensions into what they notice, protect, ask, attempt, avoid or enjoy. Private interpretation is not spoken dialogue.
+
+Attach precise accepted-scene refs through an entity's `history` links or profile dependencies. Use `profile_refs` for relationship and independent-development material held in separate owners. Minor participants can retain exact accepted-scene evidence instead of an invented full biography. Departure removes presence, not retrievability. Current location/resources stay checkpoint-owned.
+
 ## Rules, checks and resources
 
 Use the campaign's actual rules edition and adopted rulings. Read the full relevant ability, resource and interaction before adjudication. Explain important limits before a consequential commitment. Use actual dice for genuine uncertainty; do not ask for meaningless rolls or treat social success as mind control.
@@ -39,6 +51,14 @@ Use the campaign's actual rules edition and adopted rulings. Read the full relev
 Keep declared intent, roll, stakes, adjudication and effect distinct. Preserve accepted valid actions when repairing an incorrect ruling. Do not silently spend companion resources in records: narrate the actual cast/action and cost, then reconcile the owner. Plans to cast do not consume resources. Level changes do not inherently restore resources.
 
 Learning uses credited practice and feasible feedback. Track prerequisites, evidence, assistance, progress, next opportunity and completion. Do not repeatedly extend completed requirements or grant unannounced powers. Respect the actual rules for teaching, rituals, resting, preparation and advancement.
+
+Do not demand recall rolls for knowledge established by a character's experience. Before encounters verify applied builds, relevant features, modifiers and pending choices; level labels do not prove abilities or restore resources. In initiative give the usable ruling and next decision without repeatedly describing unchanged state.
+
+## Companion preparation after rests
+
+At an actual rest boundary inspect each companion's verified features, standing preferences, preparation choices, recipients and upcoming needs. Consider feasible encouragement, protective magic, study, equipment or other support without requiring player reminders. Verify eligibility, language, attendance, time, components, duration, stacking and resources under the adopted rules.
+
+Resolve an actual opportunity, narrate the action and cost, then update resources/effects. A rest alone does not establish that a feature was used. Do not silently spend resources or impose the same support routine on every companion. Preserve independent interests and willingness. `prepare --activity rest` retrieves this procedure, mechanics, development and commitments; it grants nothing.
 
 ## Tone and presentation
 

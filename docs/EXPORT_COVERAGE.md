@@ -2,6 +2,8 @@
 
 This release extracts a reusable framework from a long-running private GM workspace. It is **not** a dump of that workspace and does not replace or migrate its live campaign. The public Python package is a portable reimplementation of the active retrieval concepts. The Roll20 bridge preserves and generalizes the existing tested implementation.
 
+**Correction to the initial release:** v0.1.0 overstated functional preservation. Important procedures survived in prose but lost retrieval connections, and character/source recovery was less capable. v0.2.0 restores the connections described below. See the [parity audit](PARITY_AUDIT.md) for concrete losses, repairs, evidence and remaining limits.
+
 ## Coverage map
 
 | Private-system responsibility | Public implementation | Treatment |
@@ -10,9 +12,9 @@ This release extracts a reusable framework from a long-running private GM worksp
 | Play, encounter, campaign review, records and tool procedures | Six triggered procedure documents | Consolidated repeated safeguards while preserving decision, awareness, group, source, development and cleanup duties |
 | Entity/category readers and ordinary lore routes | `store.Campaign`, `campaign.json` | One explicit reference registry; configurable paths, identities and topics |
 | Module contexts, original cache readers and source views | Source inventory, reference dependencies and `sources.py` | Replaced adventure-specific builders and numeric source mappings with explicit per-game provenance |
-| Focused preparation and context views | `prepare`, `recover`, `attention` | Full selected units, required closure, actual participant profiles, outstanding queue and boundary reminders |
-| Preparation-selection fingerprints | `manifest`, `render` | Exact-body same-owner deduplication and explicitly scoped byte reuse |
-| Accepted-history readers/correction gates | Registered history refs, broader accepted-path discovery, `impact`, excluded stores | Preserved accepted-record boundary and narrow correction routing |
+| Focused preparation and context views | `prepare`, `recover`, `attention` | Full profiles/history, activity duties, focused refreshes, five review phases, scene recovery, independent review actors and operation evidence |
+| Preparation-selection fingerprints | `manifest`, `render` | Same-owner contained-section deduplication; scoped reuse guarded by selection, policy, checkpoint, candidate metadata and semantic review assertion |
+| Accepted-history readers/correction gates | Character history joins, broader accepted-path discovery, `impact`, excluded stores | Inactive child reads also block contaminated parent reads/broad discovery; minor departed actors can use accepted-history evidence |
 | Spatial parent reader and map startup | Reference dependency closure, visual-gap records, spatial procedure | Preserved parent/source dependencies; no game-specific geometry or map builder |
 | Actual uncertain rolls | `roll` | System-independent die sides/count/modifier; no automatic adjudication |
 | Inspection Mod and its unit harness | `roll20/GMControl.js`, `.test.cjs` | Retained private read/receipt, lab guard, expected-value, undo and music behavior; renamed command/namespace; removed fixed resource list |
@@ -29,7 +31,7 @@ This release extracts a reusable framework from a long-running private GM worksp
 - Generic document/image-generation utilities unrelated to running the GM workflow, local runtime binaries, browser sessions, credentials and host-specific automation configuration.
 - Obsolete parallel retrieval pilots whose schemas and tests depended on private canon. No claim is made that a universal fact graph replaced the owner-based system.
 
-These exclusions remove private inputs and one-use deployment code, not required reusable campaign behavior. Their reusable purposes are mapped above. Publishing those files after replacing a few names would expose source material and preserve misleading assumptions.
+These exclusions are appropriate privacy and portability boundaries. They did not justify the initial release's missing reusable behavior. The restored responsibilities are mapped above; publishing private files after replacing a few names would still expose source material and preserve misleading assumptions.
 
 ## Behavior changes and tradeoffs
 
@@ -39,4 +41,4 @@ Selection emits complete declared units instead of keyword-ranked profile previe
 
 The lightweight package omits an autonomous model runner, browser session manager and database server. The GM host supplies tools and authenticated access. This keeps accounts and model choice independent but requires explicit setup, source registration, and competent record maintenance.
 
-The exported procedures preserve practical review triggers and character depth, but their success still depends on applying them to actual narration. Validation demonstrates retrieval invariants and bridge guards, not universal game quality. Evaluate unfamiliar scenes before expanding automation.
+The revised procedures connect review phases, activity triggers, character history and source events to actual retrieval entry points. Their success still depends on applying them to narration. Validation demonstrates retrieval behavior and bridge guards, not universal game quality. Evaluate unfamiliar scenes before expanding automation.

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "campaign-gm-framework"
-version = "0.1.0"
+version = "0.2.0"
 description = "Campaign-independent GM workflow, evidence retrieval, and Roll20 inspection tools"
 requires-python = ">=3.10"
 license = {text = "MIT"}
@@ -19,4 +19,4 @@ campaign-gm = "gm_framework.cli:main"
 include = ["gm_framework*"]
 
 [tool.setuptools.package-data]
-gm_framework = ["templates/*.md", "templates/procedures/*.md"]
+gm_framework = ["templates/*.md", "templates/procedures/*.md", "legacy_templates.json"]

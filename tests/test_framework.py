@@ -77,16 +77,16 @@ class FrameworkTests(unittest.TestCase):
 
     def test_full_context_scope_hash_reuse_changes_only_changed_evidence(self):
         plan = self.c.prepare("ally")
-        saved = manifest(plan, "scene-session-1")
-        reused = render(plan, saved, "scene-session-1")
+        saved = manifest(plan, "scene-session-1", "changed premises checked")
+        reused = render(plan, saved, "scene-session-1", invalidation="changed premises checked")
         self.assertNotIn("draws unfamiliar birds", reused)
         self.assertIn("draws unfamiliar birds", render(plan, saved, "new-context"))
         path = self.root / "records/CHARACTERS.md"
         path.write_text(path.read_text(encoding="utf-8").replace("dry", "understated"), encoding="utf-8")
         changed = self.c.prepare("ally")
-        text = render(changed, saved, "scene-session-1")
+        text = render(changed, saved, "scene-session-1", invalidation="changed premises checked")
         self.assertIn("understated", text)
-        self.assertIn("Unchanged bytes omitted", text)
+        self.assertIn("Reuse invalidated", text)
         # A newly required dependency invalidates the old selection, even if old bodies match.
         self.c.entities["ally"]["required"].append("accepted-visit")
         self.assertIn("Current boundary", render(self.c.prepare("ally"), saved, "scene-session-1"))

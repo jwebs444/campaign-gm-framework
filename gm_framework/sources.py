@@ -4,8 +4,76 @@ from __future__ import annotations
 from datetime import datetime, timezone
 import json
 import re
+from html.parser import HTMLParser
 
 from .store import Campaign, digest
+
+
+def readable_html(raw):
+    """Deterministic text view; exact original HTML stays stored and hashed."""
+    class Reader(HTMLParser):
+        def __init__(self):
+            super().__init__(convert_charrefs=True)
+            self.parts = []
+            self.hidden = 0
+        def handle_starttag(self, tag, attrs):
+            if tag in {"script", "style"}:
+                self.hidden += 1
+            if self.hidden:
+                return
+            if re.fullmatch(r"h[1-6]", tag):
+                self.parts.append("\n\n" + "#" * int(tag[1]) + " ")
+            elif tag in {"p", "div", "br", "li", "tr"}:
+                self.parts.append("\n")
+            elif tag in {"td", "th"}:
+                self.parts.append(" | ")
+            elif tag == "img":
+                values = dict(attrs)
+                self.parts.append(f"\n[image requires inspection: {values.get('alt', '')} {values.get('src', '')}]\n")
+            elif tag == "a":
+                href = dict(attrs).get("href", "")
+                if href:
+                    self.parts.append(f"[source link: {href}] ")
+        def handle_endtag(self, tag):
+            if tag in {"script", "style"}:
+                self.hidden = max(0, self.hidden - 1)
+            elif not self.hidden and (tag in {"p", "div", "li", "tr"} or re.fullmatch(r"h[1-6]", tag)):
+                self.parts.append("\n")
+        def handle_data(self, text):
+            if not self.hidden:
+                self.parts.append(text)
+    parser = Reader()
+    parser.feed(raw)
+    parser.close()
+    return "".join(parser.parts).strip()
+
+
+def source_menu(campaign, entity=None):
+    """Full source menu, including optional topics; no hidden top-N cutoff."""
+    keys = set(campaign.refs)
+    if entity:
+        key = campaign.resolve(entity)
+        item = campaign.entities[key]
+        seeds = item.get("required", []) + item.get("history", []) + item.get("profile_refs", [])
+        seeds += [item["profile"]] if item.get("profile") else []
+        seeds += [r for refs in item["topics"].values() for r in refs]
+        keys = set(seeds)
+        while True:
+            expanded = keys | {e["ref"] for r in keys for e in campaign.refs[r].get("dependencies", [])}
+            if expanded == keys:
+                break
+            keys = expanded
+    inventory = {row["id"]: row for row in campaign.owner("sources")}
+    rows = []
+    for key in sorted(keys):
+        ref = campaign.refs[key]
+        if ref.get("status") == "source":
+            rows.append({"ref": key, "path": ref.get("path"), "locator": ref.get("locator"),
+                         "section": ref.get("section"), "authority": ref.get("authority"),
+                         "coverage": inventory.get(key, {}).get("coverage", "See source owner; no complete-adventure claim"),
+                         "adoption": inventory.get(key, {}).get("adoption", "See adopted owner")})
+    return {"sources": rows, "inventory": list(inventory.values()) if not entity else None,
+            "notice": "All declared source dependencies, including unselected topics. Missing undeclared material still requires source inventory/GM review."}
 
 
 def assemble(receipts):

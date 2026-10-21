@@ -14,7 +14,7 @@ def build_demo(destination, setting="marsh"):
     root = initialize(destination, title, player, hero, rules, genre)
     config = read_json(root / "campaign.json")
     config["entities"]["ally"] = {"name": companion, "kind": "character", "controller": "gm", "aliases": ["specialist"],
-        "profile": "ally-profile", "required": ["ally-profile", "corrections"],
+        "profile": "ally-profile", "history": ["accepted-visit"], "required": ["ally-profile", "corrections"],
         "topics": {"core": [], "work": ["work-site"], "relationship": ["accepted-visit"]},
         "related": [{"entity": "pc", "why": "Shared repair expedition; separate knowledge"}]}
     config["entities"]["site"] = {"name": place, "kind": "location", "required": ["work-site"],
@@ -34,6 +34,7 @@ def build_demo(destination, setting="marsh"):
         "accepted-visit": {"path": "history/ACCEPTED.md", "section": "First visit"},
     })
     for path, text in {
+        "records/SCENE.md": f"# Scene preparation\n\n## Current scene\n\nAt the {place}, {hero} and {companion} are discussing the unfinished repair. The specialist awaits a decision about inspecting the test station.\n\n## Commitments\n\nThe player delivered the seal. Remaining fitting, testing and reporting are owned by operation repair; no outcome has been promised as complete.\n\n## Rolling preparation\n\nA test, a conversation with the apprentice, or departure are possible. None is chosen.\n",
         "records/CHARACTERS.md": f"# Characters\n\n## Player character\n\n{hero} is controlled by {player}. Their inner life is not supplied by the GM.\n\n## Specialist\n\n{companion} repairs equipment but also draws unfamiliar birds, keeps letters from a distant sibling, and dislikes waste. Their humor is dry. They prefer evidence to promises but will spend scarce time helping an anxious apprentice.\n\n### Relationships\n\n{hero} kept a promise to bring parts. Trust increased because the delivery cost them a detour; this is not general obedience.\n\n### Knowledge\n\nThey know the old seal leaked. They have not received the test result and cannot report the repair complete.\n\n### Independent development\n\nAfter the apprentice identified a fault they missed, they began asking for observations before giving instructions. This is a supported change in teaching, not a new external event.\n",
         "records/PLACES.md": f"# Places\n\n## Region\n\nMessages require a runner; there is no assumed instant communication.\n\n## Work site\n\nThe {place} contains the {machine}. Access through the maintenance entrance was granted during the accepted first visit. Geometry is not established by this text.\n",
         "records/MECHANICS.md": "# Adopted mechanics\n\n## Repair\n\nA fitted replacement must be pressure-tested before safe operation. The supplement's automatic success rule is not adopted. Use the configured rules for uncertain work.\n",

@@ -6,6 +6,10 @@ Ordinary retrieval reads accepted owners and registered original sources. Reject
 
 Use coherent owners with exact heading/JSON-pointer selectors. Preserve full profiles and detailed accepted scenes once. Link concise chronology, knowledge and project results back to that evidence. Avoid competing summaries of mutable facts. Keep current location/resources in the state owner; profile history can describe earlier locations without becoming another CURRENT field.
 
+When wording matters, retain exact terms or a faithful itemized account: who said/offered what, to whom, conditions, audience, response and unresolved duties. Presence does not imply hearing, understanding or acceptance. Preserve distinctive small remarks and gestures when they explain later humor, affection, recognition or development. Add precise locators to affected profiles/operations, not duplicate transcripts.
+
+Correction markers alone are insufficient. Purge withdrawn prose and unsupported derived interpretations from ordinary readable owners before resuming. A broad owner read containing a registered inactive/proposed child must fail until cleaned or narrowed; discovery cannot use that path to bypass the accepted-record boundary. Preserve unrelated accepted material and necessary unresolved evidence.
+
 ## Delivered changes
 
 Save actual narrated actions and accepted rulings. Prewritten continuations remain proposals until delivered. Reconcile the final answer before the next adjudication when a prepared draft changed.
