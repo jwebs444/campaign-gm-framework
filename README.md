@@ -61,6 +61,7 @@ These examples use different characters, genres, and nominal rules systems. They
 | [Operating workflow](gm_framework/templates/DM_WORKFLOW.md) | Each response, recovery, time and review phases |
 | [Architecture](docs/ARCHITECTURE.md) | Owners, selectors, dependency selection, discovery and reuse |
 | [Configuration](docs/CONFIGURATION.md) | Add characters, topics, source links, operations and calendars |
+| [Optional rulings](docs/OPTIONAL_RULINGS.md) | Reusable table variants; none are applied by default |
 | [Roll20 bridge](roll20/README.md) | Install, inspect, capture sources, limits and permissions |
 | [Evaluation guide](docs/EVALUATION.md) | Test real outcomes and unfamiliar questions |
 | [Export coverage](docs/EXPORT_COVERAGE.md) | What was generalized, retained, replaced or intentionally excluded |
@@ -69,7 +70,7 @@ These examples use different characters, genres, and nominal rules systems. They
 
 The campaign procedures cover [portrayal](gm_framework/templates/procedures/PLAY.md), [living world](gm_framework/templates/procedures/WORLD.md), [records](gm_framework/templates/procedures/RECORDS.md), [space and encounters](gm_framework/templates/procedures/SPATIAL.md), [tools](gm_framework/templates/procedures/TOOLS.md), and [handoffs](gm_framework/templates/procedures/HANDOFF.md). They are triggered detail, not six extra checklists for every turn.
 
-Existing v0.1 campaigns: install the new version, preview `campaign-gm --root PATH upgrade`, then use `upgrade --apply` if no customized-template conflict is reported. See the [upgrade procedure](docs/CONFIGURATION.md#upgrade-an-existing-v01-campaign). v0.2 restores activity triggers, separately selectable review phases, causal-history joins and stronger retrieval safeguards that the initial export lacked.
+Existing v0.1 or v0.2 campaigns: install the new version, preview `campaign-gm --root PATH upgrade`, then use `upgrade --apply` if no customized-template conflict is reported. See the [upgrade procedure](docs/CONFIGURATION.md#upgrade-an-existing-v01-campaign). v0.3 adds coherent topic integration, source refresh in place, stronger obsolete-record and source-discovery boundaries, and publication scanning of staged files and reachable history. It preserves v0.2's activity triggers, review phases and causal-history joins.
 
 ## Roll20 and model limitations
 
@@ -86,6 +87,8 @@ python -m unittest discover -s tests -v
 node roll20/GMControl.test.cjs
 python tools/check_distribution.py
 ```
+
+Before publishing an export, also run `python tools/check_distribution.py --staged --history --private-terms /outside-repository/private-terms.txt`. Supply a private UTF-8 list of names and distinctive phrases, one per line. Keep that list outside the public repository. This checks the full Git index and locally reachable historical blobs; fetch intended remote refs first. Review the actual content too: literal matches cannot certify that paraphrased personal lore is absent. Historical matches require an explicit history-cleanup decision; deleting a current file does not remove old commits.
 
 The release includes focused regression tests and synthetic examples. CI runs Python 3.10/3.13 on Linux and Windows. See the evaluation guide for the distinction between verified code behavior and unverified live-game or model performance.
 

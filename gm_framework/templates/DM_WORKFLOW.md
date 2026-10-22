@@ -19,8 +19,9 @@ Apply authority within the player's actual control: explicit player decisions an
 | `history/ACCEPTED.md` | Detailed accepted events and meaningful dialogue, recorded once |
 | `records/CORRECTIONS.md` | Accepted correction pointers and affected owners; no rejected scene replay |
 | `records/sources.json` | Source provenance, availability, completeness, edition and adoption status |
+| Registered source files | One original field or distinct asset per owner; catalogue and routes link it without copying its body |
 
-Split large owners into coherent sections or files when useful. Update their references instead of adding rival CURRENT summaries. One fact may serve several routes; it still has one owner. File edit time measures maintenance, not fictional occurrence or authority.
+Split large owners into coherent sections or files when useful. Update stable reference IDs to their current paths/selectors instead of adding rival CURRENT summaries. One fact may serve several routes; it still has one owner. File edit time measures maintenance, not fictional occurrence or authority. RECORDS / Integrating a change governs topic rewrites, retrieval repair and disposal; use it when a rule, source, owner or correction changes.
 
 ## Recovery and focused retrieval
 

@@ -39,6 +39,26 @@ def section(text, name, include_children=True):
     return text[match.start():end].strip()
 
 
+def select_text(text, ref):
+    """One selector implementation for reads, boundary checks and source refreshes."""
+    if ref.get("view") == "text":
+        from .sources import readable_html
+        text = readable_html(text)
+    if "section" in ref:
+        text = section(text, ref["section"], ref.get("include_children", True))
+    if "start" in ref:
+        text = bounded_text(text, ref["start"], ref.get("end"))
+    if "pointer" in ref:
+        text = json.dumps(pointer(json.loads(text), ref["pointer"]), ensure_ascii=False, indent=2)
+    for selector, splitter in [("paragraph_prefix", "\n\n"), ("row_prefix", "\n")]:
+        if selector in ref:
+            hits = [p for p in text.split(splitter) if p.strip().startswith(ref[selector])]
+            if len(hits) != 1:
+                raise ValueError(f"Selector must match once: {selector}")
+            text = hits[0]
+    return text
+
+
 def pointer(data, address):
     if address == "":
         return data
@@ -132,21 +152,7 @@ class Campaign:
             text = handle.read()
         if "sha256" in ref and digest(text) != ref["sha256"]:
             raise ValueError(f"Source hash changed: {key}; review before refreshing the fingerprint")
-        if ref.get("view") == "text":
-            from .sources import readable_html
-            text = readable_html(text)
-        if "section" in ref:
-            text = section(text, ref["section"], ref.get("include_children", True))
-        if "start" in ref:
-            text = bounded_text(text, ref["start"], ref.get("end"))
-        if "pointer" in ref:
-            text = json.dumps(pointer(json.loads(text), ref["pointer"]), ensure_ascii=False, indent=2)
-        for selector, splitter in [("paragraph_prefix", "\n\n"), ("row_prefix", "\n")]:
-            if selector in ref:
-                hits = [p for p in text.split(splitter) if p.strip().startswith(ref[selector])]
-                if len(hits) != 1:
-                    raise ValueError(f"Selector must match once: {key}.{selector}")
-                text = hits[0]
+        text = select_text(text, ref)
         if status in {"accepted", "source"}:
             # A broad owner read must not bypass an inactive/proposed child selector.
             for other_key, other in self.refs.items():
@@ -155,25 +161,16 @@ class Campaign:
                 try:
                     with self.path(other["path"]).open(encoding="utf-8-sig", newline="") as handle:
                         blocked = handle.read()
-                    if other.get("view") == "text":
-                        from .sources import readable_html
-                        blocked = readable_html(blocked)
-                    if "section" in other:
-                        blocked = section(blocked, other["section"], other.get("include_children", True))
-                    if "start" in other:
-                        blocked = bounded_text(blocked, other["start"], other.get("end"))
-                    if "pointer" in other:
-                        blocked = json.dumps(pointer(json.loads(blocked), other["pointer"]), ensure_ascii=False, indent=2)
-                    for selector, splitter in [("paragraph_prefix", "\n\n"), ("row_prefix", "\n")]:
-                        if selector in other:
-                            hits = [p for p in blocked.split(splitter) if p.strip().startswith(other[selector])]
-                            if len(hits) != 1:
-                                blocked = ""
-                                break
-                            blocked = hits[0]
+                    blocked = select_text(blocked, other)
                 except (ValueError, KeyError, IndexError):
                     continue  # Physically removed withdrawn text is not retrieved.
-                if blocked.strip() and blocked.strip() in text:
+                json_overlap = False
+                if "pointer" in other and not any(s in ref or s in other for s in ("section", "start", "view", "paragraph_prefix", "row_prefix")):
+                    # Serialized nested JSON has different indentation from a
+                    # standalone pointer result; substring matching is unsafe.
+                    left, right = ref.get("pointer", ""), other["pointer"]
+                    json_overlap = left == right or left == "" or right == "" or left.startswith(right + "/") or right.startswith(left + "/")
+                if json_overlap or (blocked.strip() and blocked.strip() in text):
                     raise ValueError(f"{key} contains inactive/proposed material from {other_key}; clean or narrow the owner before retrieval")
         return text.strip()
 
@@ -379,12 +376,22 @@ class Campaign:
         # Discovery is broader than curated routes. New accepted files must be findable
         # before anyone knows to add the exact dependency link.
         inactive_paths = {ref.get("path") for ref in self.refs.values() if ref.get("status", "accepted") not in {"accepted", "source"}}
+        source_paths = {ref.get("path") for ref in self.refs.values() if ref.get("status") == "source"}
+        source_paths.update(row.get("path") for row in self.owner("sources"))
+        visited = set()
         for pattern in self.config.get("discovery_paths", []):
             inside(self.root, pattern)
             for path in sorted(self.root.glob(pattern)):
                 if not path.is_file():
                     continue
                 relative = path.relative_to(self.root).as_posix()
+                if relative in visited:
+                    continue
+                visited.add(relative)
+                if relative in source_paths:
+                    # A broad scan must not bypass source hashes or selectors, or
+                    # present raw source material as an accepted-owner candidate.
+                    continue
                 if relative in inactive_paths:
                     gaps.append({"path": relative, "error": "Broad scan withheld: inactive/proposed material shares this file. Clean the owner; accepted registered sections remain searchable."})
                     continue
@@ -407,7 +414,9 @@ class Campaign:
         affected = {target}
         while True:
             added = {key for key, ref in self.refs.items()
-                     if any(e["ref"] in affected for e in ref.get("dependencies", []))}
+                     if any(e["ref"] in affected for e in ref.get("dependencies", []))
+                     or (self.refs[target].get("status") == "source" and ref.get("status") == "source"
+                         and ref.get("path") == self.refs[target].get("path") and ref.get("path"))}
             if added <= affected:
                 break
             affected |= added
@@ -486,6 +495,10 @@ class Campaign:
             for actor in op.get("actors", []):
                 if actor not in self.entities:
                     errors.append(f"Operation {op['id']} references unknown actor {actor}")
+            try:
+                self.plan([(r, f"Operation {op['id']}") for r in op.get("refs", [])], "core", {"audit": op["id"]})
+            except (ValueError, KeyError, IndexError, OSError) as exc:
+                errors.append(f"Operation {op['id']}: {exc}")
         calendar = self.config["calendar"]
         if not isinstance(calendar["period"], int) or calendar["period"] <= 0:
             errors.append("Calendar period must be a positive integer")

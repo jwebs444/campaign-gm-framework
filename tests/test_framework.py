@@ -197,7 +197,10 @@ class SourceTests(unittest.TestCase):
             self.assertFalse(Campaign(root).audit()["errors"])
             with self.assertRaises(ValueError):
                 import_source(root, self.receipts(), "test-source", "Synthetic", "TEST-GAME", "handout", "test", "original")
-            import_source(root, self.receipts("A\r\nB", 2), "crlf-source", "Newlines", "TEST-GAME", "handout", "test", "original")
+            crlf = self.receipts("A\r\nB", 2)
+            for row in crlf:
+                row["id"] = "SYNTHETIC-NEWLINES"
+            import_source(root, crlf, "crlf-source", "Newlines", "TEST-GAME", "handout", "test", "original")
             self.assertEqual(Campaign(root).read("crlf-source"), "A\r\nB")
 
 

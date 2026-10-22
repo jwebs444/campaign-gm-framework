@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "campaign-gm-framework"
-version = "0.2.0"
+version = "0.3.0"
 description = "Campaign-independent GM workflow, evidence retrieval, and Roll20 inspection tools"
 requires-python = ">=3.10"
 license = {text = "MIT"}

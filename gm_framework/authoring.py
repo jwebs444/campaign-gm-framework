@@ -134,5 +134,5 @@ def upgrade(root, apply=False):
         if scene_path is not None:
             scene_path.write_text(scene, encoding="utf-8")
         write_json(c.root / "campaign.json", config)
-    return {"applied": apply, "workflow_revision": 2, "templates": [p for p, _ in changes],
+    return {"applied": apply, "workflow_revision": config["workflow_revision"], "templates": [p for p, _ in changes],
             "notice": "Configuration/procedure upgrade only. No time, resources, history, or scene outcomes changed. Use --apply after reviewing this preview."}

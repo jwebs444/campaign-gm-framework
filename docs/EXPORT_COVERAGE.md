@@ -6,6 +6,8 @@ This release extracts a reusable framework from a long-running private GM worksp
 
 ## Coverage map
 
+v0.3 carries forward the subsequent maintenance repairs without copying campaign records: complete-topic rewrites, stable current-owner references, causal character reasoning, disposal of obsolete scaffolding, source refresh in place, and stronger retrieval/publication boundaries. The portable source layout remains one file per distinct field or asset with a separate metadata catalogue; it does not inherit an adventure-specific cache layout.
+
 | Private-system responsibility | Public implementation | Treatment |
 |---|---|---|
 | Root agent instructions and operating core | Repository `AGENTS.md`, generated campaign `AGENTS.md`, `DM_WORKFLOW.md` | Generalized roles, rules, paths, review clocks and authority; removed fixed cast/plot/level target |
@@ -20,6 +22,10 @@ This release extracts a reusable framework from a long-running private GM worksp
 | Inspection Mod and its unit harness | `roll20/GMControl.js`, `.test.cjs` | Retained private read/receipt, lab guard, expected-value, undo and music behavior; renamed command/namespace; removed fixed resource list |
 | Current checkpoint, operations and progression owners | Initialized private records and templates | Empty/configurable, not transferred from any campaign |
 | Explicit continuing-GM transfer | Handoff procedure | Host-independent instructions; no account-specific chat control code |
+| Current-owner source refresh | `source-refresh`, shared selectors and source inventory | Replaces one verified field in place; previews dependent routes, rejects broken selectors and retains adoption/identity |
+| Consolidation and maintenance | RECORDS integration section, cleanup dependency, stable reference IDs | Rewrite existing owners, retain causal reasoning and accepted history, dispose of scaffolding, inspect actual output |
+| Publication privacy | `check_distribution.py --staged --history --private-terms` | Scans the intended index and reachable historical blobs; private terms stay outside the public repository |
+| Reusable mechanical rulings | `docs/OPTIONAL_RULINGS.md` | Explicit optional variants, with no character grants, setting exceptions or default rules edition |
 | Structural regression checks | Focused Python tests, inherited/generalized bridge tests and CI | Synthetic fixtures; no private histories or expected player outcomes |
 | Granular-record/graph experiments | Evaluation guidance and architecture notes | Findings retained; frozen campaign-specific pilot engines not shipped as production features |
 

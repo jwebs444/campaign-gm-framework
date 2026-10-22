@@ -18,6 +18,8 @@ Keep player-facing narration free of GM secrets, source receipts, evaluation mat
 
 Update authoritative owners in place after delivered consequential changes. Preserve accepted history once, including meaningful small moments. Remove rejected branches from ordinary retrieval immediately; scheduled cleanup also removes stale current claims. Plans do not become facts, resources, agreements, or constraints without actual adoption and delivery.
 
+RECORDS owns integration and disposal. Rewrite a changed topic in its existing owner, remove displaced claims and repair selectors together. Preserve the reasoning and accepted experiences behind character development. If an adequate rule was not followed, repair its retrieval or execution. Do not accumulate amendments, receipts, dated snapshots or alternate fact stores.
+
 Use actual dice for uncertainty and verified mechanics for resources. The framework does not adjudicate a rules system. Do not spend resources or award abilities through an unannounced record edit. Preserve concurrent edits and the difference between technical receipts and fictional outcomes.
 
 Apply independent attention to every protagonist, significant companion, and consequential NPC. Do not collapse a person into their job, relationship, or most recent emotion. Resolve important choices through earned information, goals, feelings, relationships, feasible means, and alternatives.

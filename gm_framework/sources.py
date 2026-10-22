@@ -6,7 +6,7 @@ import json
 import re
 from html.parser import HTMLParser
 
-from .store import Campaign, digest
+from .store import Campaign, digest, select_text
 
 
 def readable_html(raw):
@@ -64,14 +64,17 @@ def source_menu(campaign, entity=None):
                 break
             keys = expanded
     inventory = {row["id"]: row for row in campaign.owner("sources")}
+    by_path = {row.get("path"): row for row in inventory.values() if row.get("path")}
     rows = []
     for key in sorted(keys):
         ref = campaign.refs[key]
         if ref.get("status") == "source":
+            owner = inventory.get(key, by_path.get(ref.get("path"), {}))
             rows.append({"ref": key, "path": ref.get("path"), "locator": ref.get("locator"),
                          "section": ref.get("section"), "authority": ref.get("authority"),
-                         "coverage": inventory.get(key, {}).get("coverage", "See source owner; no complete-adventure claim"),
-                         "adoption": inventory.get(key, {}).get("adoption", "See adopted owner")})
+                         "source_id": owner.get("id"), "completeness": owner.get("completeness"),
+                         "coverage": owner.get("coverage", "See source owner; no complete-adventure claim"),
+                         "adoption": owner.get("adoption", "See adopted owner")})
     return {"sources": rows, "inventory": list(inventory.values()) if not entity else None,
             "notice": "All declared source dependencies, including unselected topics. Missing undeclared material still requires source inventory/GM review."}
 
@@ -113,6 +116,10 @@ def import_source(root, receipts, key, title, game, object_type, edition, author
     allowed = {"handout": {"notes", "gmnotes"}, "character": {"bio", "gmnotes"}}
     if object_type not in allowed or receipt["field"] not in allowed[object_type]:
         raise ValueError("Source field does not match object type")
+    sources = campaign.owner("sources")
+    identity = ("roll20", game, object_type, receipt["id"], receipt["field"])
+    if any(tuple(row.get(k) for k in ("provider", "game", "object_type", "object_id", "field")) == identity for row in sources):
+        raise ValueError("Source field already registered; refresh its existing owner instead of creating a copy")
     path = f"sources/{key}.html"
     target = campaign.path(path)
     if target.exists():
@@ -120,10 +127,9 @@ def import_source(root, receipts, key, title, game, object_type, edition, author
     entry = {"id": key, "title": title, "provider": "roll20", "game": game,
              "object_type": object_type, "object_id": receipt["id"], "field": receipt["field"],
              "edition": edition, "authority": authority, "path": path, "sha256": digest(text),
-             "captured_at": datetime.now(timezone.utc).isoformat(), "completeness": "complete-field",
+             "captured_at": datetime.now(timezone.utc).isoformat(), "fingerprint": receipt["fingerprint"], "completeness": "complete-field",
              "coverage": "One field only; linked handouts, maps, and other fields remain separate dependencies",
              "adoption": "unassessed", "redistribute": False}
-    sources = campaign.owner("sources")
     sources.append(entry)
     config = campaign.config
     config["refs"][key] = {"path": path, "status": "source", "authority": authority, "sha256": digest(text),
@@ -133,3 +139,61 @@ def import_source(root, receipts, key, title, game, object_type, edition, author
     campaign.path(config["owners"]["sources"]).write_text(json.dumps(sources, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     (campaign.root / "campaign.json").write_text(json.dumps(config, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     return entry
+
+
+def refresh_source(root, receipts, key, expected, apply=False):
+    """Preview/replace one verified field in place; never adopt its new contents.
+
+    The campaign uses a single writer. Validate every affected selector and
+    reread all three destinations before writing; this is not a cross-file
+    transaction. An interrupted apply requires reconciliation before play.
+    """
+    from .bootstrap import write_json
+    campaign = Campaign(root)
+    config_path = campaign.root / "campaign.json"
+    inventory_path = campaign.path(campaign.config["owners"]["sources"])
+    snapshots = {p: p.read_bytes() for p in (config_path, inventory_path)}
+    sources = campaign.owner("sources")
+    hits = [row for row in sources if row["id"] == key]
+    if len(hits) != 1:
+        raise ValueError("Refresh needs one registered source inventory ID")
+    entry = hits[0]
+    if entry.get("provider") != "roll20" or entry.get("completeness") != "complete-field":
+        raise ValueError("Refresh requires a complete imported Roll20 field")
+    ref = campaign.refs[key]
+    if ref.get("status") != "source" or ref.get("path") != entry["path"]:
+        raise ValueError("Source reference and inventory owner disagree")
+    target = campaign.path(entry["path"])
+    snapshots[target] = target.read_bytes()
+    old = snapshots[target].decode("utf-8-sig")
+    if digest(old) != expected or entry.get("sha256") != expected or ref.get("sha256") != expected:
+        raise ValueError("Source changed; inspect the current owner and supply its verified hash")
+    text, receipt = assemble(receipts)
+    if (receipt["id"], receipt["field"]) != (entry["object_id"], entry["field"]):
+        raise ValueError("Refresh receipts belong to a different source field")
+    affected = []
+    for ref_id, item in campaign.refs.items():
+        if item.get("path") != entry["path"]:
+            continue
+        if item.get("status") != "source" or item.get("sha256") != expected:
+            raise ValueError(f"Source owner has an inconsistent reference: {ref_id}")
+        select_text(text, item)  # A moved/removed key must be reconciled, not silently lost.
+        affected.append(ref_id)
+    impact = campaign.impact(key)
+    changed = text != old
+    result = {"id": key, "applied": False, "changed": changed, "sha256": digest(text),
+              "refs": sorted(affected), "impact": impact,
+              "notice": "Source evidence only. Review changed text and dependent interpretations before --apply; adoption, history, knowledge and resources are not changed."}
+    if apply and changed:
+        for path, before in snapshots.items():
+            if path.read_bytes() != before:
+                raise ValueError("Owner changed during refresh; reread and merge")
+        entry.update(sha256=digest(text), fingerprint=receipt["fingerprint"],
+                     captured_at=datetime.now(timezone.utc).isoformat())
+        for ref_id in affected:
+            campaign.refs[ref_id]["sha256"] = digest(text)
+        target.write_text(text, encoding="utf-8", newline="")
+        write_json(inventory_path, sources)
+        write_json(config_path, campaign.config)
+        result["applied"] = True
+    return result

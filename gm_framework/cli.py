@@ -5,7 +5,7 @@ import secrets
 import sys
 
 from .bootstrap import initialize
-from .sources import import_source, source_menu
+from .sources import import_source, refresh_source, source_menu
 from .store import Campaign, digest, inside, manifest, read_json, render, section
 
 
@@ -89,6 +89,10 @@ def main(argv=None):
         source.add_argument("--" + flag, required=True)
     source.add_argument("--type", choices=["handout", "character"], required=True)
     source.add_argument("--authority", choices=["original", "supplement", "homebrew"], default="original")
+    refresh = commands.add_parser("source-refresh")
+    for flag in ["receipts", "id", "expect"]:
+        refresh.add_argument("--" + flag, required=True)
+    refresh.add_argument("--apply", action="store_true")
     update = commands.add_parser("update")
     update.add_argument("owner", help="Exact configured JSON owner name")
     update.add_argument("--from-file", required=True)
@@ -173,6 +177,8 @@ def main(argv=None):
             return 2 if result.get("conflicts") else 0
         elif args.command == "source-import":
             output(import_source(args.root, read_json(args.receipts), args.id, args.title, args.game, args.type, args.edition, args.authority))
+        elif args.command == "source-refresh":
+            output(refresh_source(args.root, read_json(args.receipts), args.id, args.expect, args.apply))
         elif args.command == "update":
             path = campaign.path(campaign.config["owners"][args.owner])
             before = path.read_text(encoding="utf-8")
@@ -194,6 +200,6 @@ def main(argv=None):
             output(result)
             return 1 if result["errors"] else 0
         return 0
-    except (ValueError, KeyError, OSError, TypeError) as exc:
+    except (ValueError, KeyError, IndexError, OSError, TypeError) as exc:
         print(f"Error: {exc}", file=sys.stderr)
         return 2

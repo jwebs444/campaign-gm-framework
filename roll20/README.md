@@ -64,6 +64,8 @@ campaign-gm --root ../my-private-campaign read harbor-source
 
 The importer checks identity, view, fingerprint consistency, gap-free slices, continuation offsets and total length, including split Unicode surrogate pairs. It stores original raw text and a SHA-256. The bridge fingerprint is only a noncryptographic cache hint. Complete-field coverage does not mean complete adventure coverage or source adoption.
 
+Keep `source-parts.json` in temporary storage outside the campaign and discard it after integration. Each game/object/field identity is imported once. Use `source-refresh --id harbor-source --receipts PATH --expect VERIFIED_CURRENT_SHA256` to preview a later complete capture, then add `--apply` after reviewing it. The existing source owner, catalogue and section hashes update together; adopted facts do not change automatically. See [refresh and consolidation](../docs/CONFIGURATION.md#consolidating-owners-and-refreshing-sources).
+
 Register maps as visual dependencies. A page's dimensions or token list cannot establish walls, exits, elevations or visibility without inspecting its actual map and key.
 
 ## Character and scene reads

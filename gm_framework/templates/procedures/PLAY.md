@@ -38,6 +38,8 @@ At meaningful resolutions and broad reviews, connect actual experience to person
 
 Mark played evidence, GM interpretation and prospective action separately. Do not invent external events to justify development. An inward change need not produce immediate dialogue, redemption, a new belief or a public decision. Revisit it when experience challenges it.
 
+Consolidation must preserve the causal reasoning, not just a list of traits or current assignments. Retain what the experience meant to the person, why it supports this change, unresolved tensions and contrary influences, and precise accepted-history anchors. A compact profile may be complete; brevity alone is not evidence that its reasoning survived. After a profile rewrite, inspect actual portrayal preparation as well as the owner.
+
 Include emotional, intellectual, spiritual and philosophical development, reinforced convictions, confidence and pleasure as well as distress. Immediate mood is not necessarily enduring change. Significant captives, enemies, leaders and individual recurring group members deserve this work too. Shared experiences do not produce identical psychology.
 
 Supported GM interpretation can establish an inner disposition without inventing a past confession. Guarded, proud, forceful or violent people retain their manner of expression; understanding their wounds does not make them meek or eager to explain themselves. Translate relevant tensions into what they notice, protect, ask, attempt, avoid or enjoy. Private interpretation is not spoken dialogue.

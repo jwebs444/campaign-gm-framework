@@ -141,4 +141,25 @@ The first command prints full selected bodies. The second can omit unchanged bod
 
 ## Upgrade an existing v0.1 campaign
 
+The same command now upgrades unchanged v0.1 **or v0.2** templates to v0.3. Existing links to this section remain valid. Workflow revision 3 connects the records integration procedure to cleanup; no fictional state is migrated.
+
 Install the new package, keep play on HOLD and run `upgrade` to preview, then `upgrade --apply`. The upgrader replaces only unchanged recognized framework templates, connects missing default routes, and adds a Commitments heading if absent. It does not alter state, resources, history or outcomes. If any affected template was customized, it reports conflicts and applies nothing. Merge those templates manually with the published versions, preserving adopted campaign choices, then rerun. Back up private owners under your normal private backup policy first. Finish with `audit` and affected recovery readback; structural success does not fill missing character/source facts.
+
+## Consolidating owners and refreshing sources
+
+Keep a reference ID stable when its owner moves: change its `path` and exact selector in `campaign.json`. Existing entity, history, dependency and recovery links continue to select that ID. Remove displaced content after preserving unique accepted evidence, then inspect the affected output. The framework deliberately has no fallback to old file bodies. `audit` also checks references on completed operations so later historical inspection does not encounter a silently broken route.
+
+One imported source field has one source body, inventory entry and identity. Section references reuse the same file and source hash. To refresh it, assemble complete raw slices from one source revision in temporary storage outside the campaign:
+
+```sh
+campaign-gm --root ../my-private-campaign source-refresh --id harbor-source --receipts /temporary/source-parts.json --expect VERIFIED_CURRENT_SHA256
+campaign-gm --root ../my-private-campaign source-refresh --id harbor-source --receipts /temporary/source-parts.json --expect VERIFIED_CURRENT_SHA256 --apply
+```
+
+The first command previews affected routes and declared dependents. Review the incoming text and reconcile material interpretation changes before applying. A missing/ambiguous section, different source identity, incomplete capture, inconsistent reference or stale expected hash blocks the write. Repair moved selectors against the old and incoming sources explicitly; do not simply delete important dependencies. The apply replaces the same source file and refreshes its inventory and linked hashes, preserving edition, authority, adoption and dependency edges. Identical text writes nothing. No history, knowledge, resources or adopted prose is changed.
+
+This is a single-writer operation, not a multi-file transaction. If interrupted, reconcile the source, inventory and linked hashes before dependent play. Keep HOLD where that inconsistency affects play. Discard temporary transport slices after integration. A capture from another game must be imported under that game's verified identity; raw receipt object IDs alone do not prove a game identity.
+
+Source menus inherit field coverage and adoption metadata for section references. Discovery uses registered source reads with hash validation and does not fall back to unverified whole-source candidates. Unrouted accepted records remain discoverable through configured accepted paths.
+
+Optional [table rulings](OPTIONAL_RULINGS.md) are documentation only. Adopt selected rules in `records/MECHANICS.md` with scope, edition and verified source dependencies; no command installs them automatically.

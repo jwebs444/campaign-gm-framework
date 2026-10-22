@@ -18,11 +18,18 @@ def connect(config):
         "world-events": {"path": "procedures/WORLD.md", "section": "Source events and opportunities"},
         "world-work": {"path": "procedures/WORLD.md", "section": "Operations and checkpoints"},
         "records-cleanup": {"path": "procedures/RECORDS.md", "section": "Scheduled cleanup"},
+        "records-integration": {"path": "procedures/RECORDS.md", "section": "Integrating a change"},
         "records-corrections": {"path": "procedures/RECORDS.md", "section": "Canon corrections"},
         "spatial-encounter": {"path": "procedures/SPATIAL.md", "section": "Combat and extended approaches"},
     }
     for key, ref in defaults.items():
         refs.setdefault(key, dict(ref, authority="campaign" if key == "commitments" else "procedure"))
+    cleanup = refs["records-cleanup"]
+    if cleanup.get("path") == defaults["records-cleanup"]["path"] and cleanup.get("section") == "Scheduled cleanup":
+        dependencies = cleanup.setdefault("dependencies", [])
+        if not any(d["ref"] == "records-integration" for d in dependencies):
+            dependencies.append({"ref": "records-integration", "required": True,
+                                 "why": "Integrate changed topics and repair selectors before disposing of scaffolding"})
     config.setdefault("scene_ref", "scene")
     config.setdefault("commitments_ref", "commitments")
     config.setdefault("review_actors", [])
@@ -53,5 +60,5 @@ def connect(config):
             if ref not in config["recovery"][mode]:
                 config["recovery"][mode].append(ref)
     config["recovery"].setdefault("scene", ["checkpoint", "scene"])
-    config["workflow_revision"] = 2
+    config["workflow_revision"] = 3
     return config

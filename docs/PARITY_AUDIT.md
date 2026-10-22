@@ -10,6 +10,8 @@ The comparison examined the predecessor's operating core, specialist procedure s
 
 ## Material losses and repairs
 
+The v0.3 follow-up addresses maintenance after consolidation. Source refresh updates existing field owners and validates linked selectors; discovery no longer bypasses a source hash failure through a broad file scan. Nested JSON rejected branches cannot bypass the accepted-record boundary through formatting differences. Stable IDs retain relocated character/history routes, and audits include dormant operation references. RECORDS now specifies coherent topic replacement, causal-detail preservation and disposal in its existing workflow. These behaviors have synthetic regression coverage in `tests/test_maintenance.py`; they do not imply a live-game or narration evaluation.
+
 | Area | What v0.1 lost or weakened | v0.2 implementation and evidence |
 |---|---|---|
 | Morning/evening work | Five phases described in prose; one broad review selection | Separate orientation, preparation, world, cleanup and scene selections read updated owners in order. Tests verify different required duties and no implicit state mutation. |
